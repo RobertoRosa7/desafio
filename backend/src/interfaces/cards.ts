@@ -4,3 +4,8 @@ export interface Cards {
     title: string;
     created_at: string
 }
+
+export interface User {
+    login: string;
+    password: string;
+}

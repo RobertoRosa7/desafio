@@ -1,12 +1,13 @@
 import {createTask, deleteOne, findAll, updateOne} from "../controllers/home";
-import {deleteLog, updateLog} from "../middlewares/logs";
+import {log} from "../middlewares/logs";
+import {auth} from "../middlewares/auth";
 
 const express = require('express');
 const router = express.Router();
 
-router.get('/', findAll);
-router.post('/', createTask);
-router.put('/:id', updateLog, updateOne);
-router.delete('/:id', deleteLog, deleteOne);
+router.get('/', auth, findAll);
+router.post('/', auth, createTask);
+router.put('/:id', auth, log, updateOne);
+router.delete('/:id', auth, log, deleteOne);
 
 module.exports = router;

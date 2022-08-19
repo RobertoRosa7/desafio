@@ -1,6 +1,5 @@
-require('dotenv').config({ path: `.env-${process.env.NODE_ENV}` });
+require('dotenv').config({path: `.env-${process.env.NODE_ENV}`});
 import {Request, Response} from "express";
-import * as db from "./src/models/cards";
 
 const express = require('express');
 const app = express();
@@ -28,11 +27,14 @@ app.use(cors(
 ));
 app.use(express.urlencoded({extended: false}));
 app.use(express.json());
+
 app.use('/home', require('./src/routes/home.ts'));
+app.use('/login', require('./src/routes/login.ts'));
+
 app.get('/', async (request: Request, response: Response) => {
-    await db.createTable();
     return response.status(200).json({status: true, message: "The Server is Running!"});
 });
+
 app.listen(3000, () => {
     console.log(`The server is running on: ${3000}`);
     console.log('TimeZone: ', new Date().toString());
