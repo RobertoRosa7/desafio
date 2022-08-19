@@ -19,13 +19,17 @@ export const login = async (request: Request, response: Response) => {
     if (!login || !password) {
         return response.status(401).json({message: "Not authorized"});
     }
+    try {
+        const user: User = await findOne(login, password);
 
-    const user: User = await findOne(login, password);
+        if (!user) {
+            return response.status(401).json({message: "Not authorized"});
+        }
 
-    if (!user) {
+        const token = jwt.sign({login, password}, process.env.JWT_SECRET, {expiresIn: '1d'});
+        return response.status(200).json({message: "token created", data: {token}});
+    } catch (e) {
         return response.status(401).json({message: "Not authorized"});
     }
 
-    const token = jwt.sign({login, password}, process.env.JWT_SECRET, {expiresIn: '1d'});
-    return response.status(200).json({message: "token created", data: {token}});
 }

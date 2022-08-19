@@ -2,6 +2,9 @@ import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {LoginComponent} from "./login.component";
 import {RouterModule, Routes} from "@angular/router";
+import {MaterialModule} from "../../material.module";
+import {EffectsModule} from "@ngrx/effects";
+import {EffectLogin} from "../../effects/effect.login";
 
 const routes: Routes = [
   {path: '', component: LoginComponent}
@@ -11,8 +14,11 @@ const routes: Routes = [
   declarations: [LoginComponent],
   imports: [
     CommonModule,
-    RouterModule.forChild(routes)
-  ]
+    RouterModule.forChild(routes),
+    MaterialModule,
+    EffectsModule.forFeature([EffectLogin]),
+
+  ],
 })
 export class LoginModule {
 }

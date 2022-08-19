@@ -27,9 +27,13 @@ export const findOne = (login: string, password: string): Promise<User> => {
             const stmt = database.prepare(query);
             stmt.get({$login: login}, async (error: Error, user: User) => {
                 if (error) reject(error);
-                const comparePass = await bcrypt.compare(password, user.password);
-                if (!comparePass) reject(new Error("Credential invalid!"));
-                resolve(user);
+                if (!user) {
+                    reject(new Error("Usuário não cadastrado"));
+                } else {
+                    const comparePass = await bcrypt.compare(password, user.password);
+                    if (!comparePass) reject(new Error("Credential invalid!"));
+                    resolve(user);
+                }
             });
         });
     });

@@ -1,1 +1,50 @@
-<p>login works!</p>
+<section class="login">
+  <form [formGroup]="formLogin" class="form-container">
+    <h1>Login</h1>
+    <div class="form-group">
+      <mat-form-field floatLabel="always" class="form-field" appearance="outline">
+        <mat-label>Login</mat-label>
+        <input name="login" required type="text" class="input"
+               formControlName="login" matInput placeholder="Login"/>
+        <mat-error *ngIf="formLogin.get('login')?.hasError('required')">
+          Precisamos do seu usuário
+        </mat-error>
+        <mat-error *ngIf="formLogin.get('login')?.hasError('minlength')">
+          Mínimo de 4 caracteres
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="form-group">
+      <mat-form-field floatLabel="always" class="form-field" appearance="outline">
+        <mat-label>Senha</mat-label>
+        <input name="login" required [type]="changeTexts ? 'password' : 'text'" class="input"
+               formControlName="password" matInput placeholder="Senha"/>
+        <mat-icon style="cursor: pointer" (click)="changeTexts = !changeTexts" matSuffix>{{ changeTexts ?
+          'visibility_off' : 'visibility' }}</mat-icon>
+      </mat-form-field>
+      <mat-error *ngIf="formLogin.get('password')?.hasError('required')">
+        Senha é obrigatória
+      </mat-error>
+      <mat-error *ngIf="formLogin.get('password')?.hasError('minlength')">
+        Mínimo de 6 caracteres
+      </mat-error>
+      <mat-error *ngIf="formLogin.get('password')?.hasError('pattern')">
+        Deve ter letras, números e caracteres especiais
+      </mat-error>
+      <mat-error *ngIf="error$ | async as error">
+        {{error.message}}
+      </mat-error>
+
+    </div>
+
+    <div class="container-buttons">
+      <button type="button" (click)="login()" [disabled]="formLogin.invalid || isLoadingLocal"
+              class="btn-signup" mat-raised-button>
+        <mat-spinner *ngIf="isLoadingLocal" color="accent" diameter="24"></mat-spinner>
+        <span *ngIf="!isLoadingLocal">Enviar</span>
+      </button>
+    </div>
+  </form>
+
+</section>
