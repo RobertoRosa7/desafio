@@ -35,8 +35,8 @@ app.get('/', async (request: Request, response: Response) => {
     return response.status(200).json({status: true, message: "The Server is Running!"});
 });
 
-app.listen(3000, () => {
-    console.log(`The server is running on: ${3000}`);
+app.listen(5000, () => {
+    console.log(`The server is running on: ${5000}`);
     console.log('TimeZone: ', new Date().toString());
 });
 
