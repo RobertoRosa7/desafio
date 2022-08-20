@@ -1,0 +1,19 @@
+.card {
+  max-width: 250px;
+  margin-bottom: 16px;
+  margin-top: 16px;
+}
+.form-field {
+  width: 100%;
+}
+.actions.center {
+  justify-content: center;
+}
+.icon {
+  cursor: pointer;
+}
+.actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}

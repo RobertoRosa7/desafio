@@ -1,0 +1,31 @@
+<mat-card class="card">
+  <mat-form-field class="form-field" appearance="fill">
+    <input [id]="'id' + todo.id" class="input" [value]="todo.title" [disabled]="!isEdit" type="text" matInput
+           placeholder="Título">
+    <mat-icon class="icon" (click)="onFocus($event)" *ngIf="!isEdit" matSuffix>edit
+    </mat-icon>
+    <mat-icon class="icon" (click)="onFocus($event)" *ngIf="isEdit" matSuffix>close
+    </mat-icon>
+  </mat-form-field>
+  <mat-form-field class="form-field" appearance="fill">
+    <mat-label>Descrição</mat-label>
+    <textarea [value]="todo.description" [disabled]="!isEdit" matInput placeholder="Descrição"></textarea>
+  </mat-form-field>
+  <mat-card-actions class="actions">
+    <button (click)="direction('prev', todo)" *ngIf="isEdit" mat-icon-button>
+      <mat-icon>chevron_left</mat-icon>
+    </button>
+    <button (click)="update(todo, 'todo')" *ngIf="!isEdit" mat-icon-button>
+      <mat-icon>block</mat-icon>
+    </button>
+    <button (click)="remove(todo)" *ngIf="isEdit" mat-icon-button>
+      <mat-icon>delete</mat-icon>
+    </button>
+    <button (click)="update(todo, 'done')" *ngIf="!isEdit" mat-icon-button>
+      <mat-icon>save</mat-icon>
+    </button>
+    <button (click)="direction('next', todo)" *ngIf="isEdit" mat-icon-button>
+      <mat-icon>chevron_right</mat-icon>
+    </button>
+  </mat-card-actions>
+</mat-card>
