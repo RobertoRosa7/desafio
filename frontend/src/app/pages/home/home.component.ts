@@ -1,4 +1,4 @@
-import {Component, OnChanges, OnInit, SimpleChanges} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Store} from "@ngrx/store";
 import * as actionsHome from "../../actions/action.home";
 import * as selectorHome from '../../selectors/selector.home';
@@ -13,7 +13,7 @@ export type Status = "new" | "todo" | "doing" | "done"
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })
-export class HomeComponent implements OnInit, OnChanges {
+export class HomeComponent implements OnInit {
   public formGroup: FormGroup = this.formBuilder.group({
     title: [],
     description: [],
@@ -30,10 +30,6 @@ export class HomeComponent implements OnInit, OnChanges {
     private formBuilder: FormBuilder
   ) {
   }
-
-  ngOnChanges(changes: SimpleChanges) {
-  }
-
 
   ngOnInit(): void {
     this.store.dispatch(actionsHome.homeRead());

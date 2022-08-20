@@ -1,6 +1,8 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
 import {Status} from "../../pages/home/home.component";
 import {Cards} from "../../interfaces/cards";
+import {FormBuilder, FormGroup} from "@angular/forms";
+import {Subscription} from "rxjs";
 
 @Component({
   selector: 'app-card',
@@ -15,7 +17,14 @@ export class CardComponent implements OnInit {
   @Output() removeEvent = new EventEmitter();
   public isEdit: boolean = false;
 
-  constructor() {
+  formGroup: FormGroup = this.formBuilder.group({
+    title: [{value: '', disabled: true}],
+    description: [{value: '', disabled: true}]
+  });
+
+  constructor(
+    private formBuilder: FormBuilder
+  ) {
   }
 
   get setDirection(): any {
@@ -26,10 +35,30 @@ export class CardComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    if (this.todo) {
+      this.formGroup.patchValue({
+        title: this.todo.title,
+        description: this.todo.description
+      });
+    }
   }
 
   onFocus(_: FocusEvent) {
     this.isEdit = !this.isEdit;
+    this.setTitleDisable();
+    this.setDescriptionDisable();
+  }
+
+  setDescriptionDisable(): void {
+    this.isEdit
+      ? this.formGroup.get('description')?.enable({onlySelf: true})
+      : this.formGroup.get('description')?.disable({onlySelf: false});
+  }
+
+  setTitleDisable(): void {
+    this.isEdit
+      ? this.formGroup.get('title')?.enable({onlySelf: true})
+      : this.formGroup.get('title')?.disable({onlySelf: false});
   }
 
   update(card: Cards, status: Status): void {
@@ -72,4 +101,14 @@ export class CardComponent implements OnInit {
     this.setDirection[direction](card);
   }
 
+  onChange() {
+    const payload: Cards = {
+      status: this.todo.status,
+      title: this.formGroup.get('title')?.value,
+      description: this.formGroup.get('description')?.value,
+      id: this.todo.id,
+      created_at: new Date().toISOString()
+    }
+    this.updateEvent.emit(payload);
+  }
 }
