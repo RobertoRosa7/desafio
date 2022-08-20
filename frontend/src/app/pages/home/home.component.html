@@ -1,1 +1,39 @@
-<p>home works!</p>
+<section class="home">
+  <div class="container">
+    <div class="row">
+      <form (ngSubmit)="create()" [formGroup]="formGroup" class="col-1">
+        <div class="title">Novo</div>
+        <mat-card class="card">
+          <mat-form-field class="form-field" appearance="fill">
+            <mat-label>Título</mat-label>
+            <input required formControlName="title" type="text" matInput placeholder="Título">
+          </mat-form-field>
+          <mat-form-field class="form-field" appearance="fill">
+            <mat-label>Descrição</mat-label>
+            <textarea required formControlName="description" matInput placeholder="Descrição"></textarea>
+          </mat-form-field>
+          <mat-card-actions class="actions center">
+            <button [disabled]="formGroup.invalid" type="submit" mat-icon-button>
+              <mat-icon>add</mat-icon>
+            </button>
+          </mat-card-actions>
+        </mat-card>
+      </form>
+      <div class="col-2">
+        <div class="title">To do</div>
+        <app-card (removeEvent)="onRemove($event)" (updateEvent)="onUpdate($event)" status="todo" [todo]="todo"
+                  *ngFor="let todo of todoList$ | async"></app-card>
+      </div>
+      <div class="col-3">
+        <div class="title">Doing</div>
+        <app-card (removeEvent)="onRemove($event)" (updateEvent)="onUpdate($event)" status="doing" [todo]="doing"
+                  *ngFor="let doing of doingList$ | async"></app-card>
+      </div>
+      <div class="col-4">
+        <div class="title">Done</div>
+        <app-card (removeEvent)="onRemove($event)" (updateEvent)="onUpdate($event)" status="done" [todo]="done"
+                  *ngFor="let done of doneList$ | async"></app-card>
+      </div>
+    </div>
+  </div>
+</section>

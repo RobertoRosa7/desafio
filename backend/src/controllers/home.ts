@@ -8,6 +8,7 @@ export const createTask = async (request: Request, response: Response) => {
         await db.insertOne(payload);
         return response.status(200).json({message: "Cards create with success!"});
     } catch (error) {
+        console.log(error)
         return response.status(400).json({message: "Not was possible create task!"});
     }
 }
@@ -17,7 +18,7 @@ export const findAll = async (request: Request, response: Response) => {
         const tasks = await db.findAll();
         return response.status(200).json({message: "success", data: tasks});
     } catch (e) {
-        return response.status(400).json({message: "Not was possible create task!"});
+        return response.status(400).json({message: "Not was possible fetch task!"});
     }
 }
 
